@@ -25,7 +25,12 @@ ReviewNode* addtoHead(ReviewNode* head, double rating, const string& comment){
 }
 
 ReviewNode* addtoTail(ReviewNode* head, double rating, const string& comment){
-    void(rating); (void)comment;
+    ReviewNode* n = new ReviewNode {rating, comment, nullptr};
+    if (!head) return n;
+
+    ReviewNode* cur = head;
+    while (cur->next) cur = cur->next;
+    cur->next = n;
     return head;
 }
 
@@ -41,10 +46,10 @@ void    deleteList(ReviewNode*& head){
 int main (){
     ReviewNode* head = nullptr;
     head = addtoHead(head, 4.8, "Terrible Movie -- would not recommend.");
+    head = addtoTail(head, 4.1, "Meh, movie was okay and I would rather sleep");
 
-    if (head){
-        cout << "First Review: " << head->rating << " - " << head->comment << " \n";
-
+    for (ReviewNode* p = head; p != nullptr; p = p->next){
+        cout << p->rating << " - " << p->comment << " \n";
     }
 
     delete head; head = nullptr;
