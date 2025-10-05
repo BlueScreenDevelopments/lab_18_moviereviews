@@ -35,7 +35,25 @@ ReviewNode* addtoTail(ReviewNode* head, double rating, const string& comment){
 }
 
 void    outputAllAndAverage(ReviewNode* head){
-    (void)head;
+    cout << "All Reviews: \n";
+
+    int count = 0;
+    double sum = 0.0;
+
+    for (ReviewNode* p = head; p !=nullptr; p = p->next){
+        count++;
+        cout << "  > Review #" << count <<": "
+             << p->rating << ": " << p->comment << endl;
+             sum += p->rating;
+    }
+
+    if (count ==0){
+        cout << "  > No Reviews entered.\n";
+    } else {
+        double average = sum / count;
+        cout << fixed << setprecision(3);
+        cout << "   > Average: " << average << endl;
+    }
 }
 
 void    deleteList(ReviewNode*& head){
