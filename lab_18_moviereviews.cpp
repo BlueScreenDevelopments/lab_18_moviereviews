@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <limits>
 using namespace std;
 
 /*
@@ -17,14 +19,35 @@ struct ReviewNode{
 };
 
 //Linked-List Operations
-ReviewNode* addtoHead(ReviewNode* head, double rating, const string& comment);
-ReviewNode* addtoTail(ReviewNode* head, double rating, const string& comment);
-void    outputAllAndAverage(ReviewNode* head);
-void    deleteList(ReviewNode*& head);
+ReviewNode* addtoHead(ReviewNode* head, double rating, const string& comment){
+    ReviewNode* n = new ReviewNode{rating, comment, head};
+    return n;
+}
+
+ReviewNode* addtoTail(ReviewNode* head, double rating, const string& comment){
+    void(rating); (void)comment;
+    return head;
+}
+
+void    outputAllAndAverage(ReviewNode* head){
+    (void)head;
+}
+
+void    deleteList(ReviewNode*& head){
+    head = nullptr;
+}
 
 
 int main (){
-    cout << "Step 1: Nodes Complied \n";
+    ReviewNode* head = nullptr;
+    head = addtoHead(head, 4.8, "Terrible Movie -- would not recommend.");
 
+    if (head){
+        cout << "First Review: " << head->rating << " - " << head->comment << " \n";
+
+    }
+
+    delete head; head = nullptr;
     return 0;
+
 }
