@@ -11,7 +11,7 @@ COMSC-210-5470
 lab-18-movie reviews
 */
 
-//structs
+//structs -- each for movie review.
 struct ReviewNode{
     double rating;
     string comment;
@@ -19,11 +19,12 @@ struct ReviewNode{
 };
 
 //Linked-List Operations
+// add to head -- add to the beginning of the list
 ReviewNode* addtoHead(ReviewNode* head, double rating, const string& comment){
     ReviewNode* n = new ReviewNode{rating, comment, head};
     return n;
 }
-
+// add to tail -- end of list
 ReviewNode* addtoTail(ReviewNode* head, double rating, const string& comment){
     ReviewNode* n = new ReviewNode {rating, comment, nullptr};
     if (!head) return n;
@@ -34,6 +35,7 @@ ReviewNode* addtoTail(ReviewNode* head, double rating, const string& comment){
     return head;
 }
 
+// Outputs all reviews, and computes average
 void    outputAllAndAverage(ReviewNode* head){
     cout << "All Reviews: \n";
 
@@ -56,21 +58,53 @@ void    outputAllAndAverage(ReviewNode* head){
     }
 }
 
-void    deleteList(ReviewNode*& head){
-    head = nullptr;
+//updated memory cleanup
+    void deleteList(ReviewNode*& head){
+        while (head){
+            ReviewNode* temp = head;
+            head = head->next;
+            delete temp;
+        }
 }
-
 
 int main (){
     ReviewNode* head = nullptr;
-    head = addtoHead(head, 4.8, "Terrible Movie -- would not recommend.");
-    head = addtoTail(head, 4.1, "Meh, movie was okay and I would rather sleep");
 
-    for (ReviewNode* p = head; p != nullptr; p = p->next){
-        cout << p->rating << " - " << p->comment << " \n";
+    // prompt for building the linked list
+    cout << "Which linked list method should we use?\n";
+    cout << "  [1] New Nodes are added at the head of the linked list\n";
+    cout << "  [2] New Nodes are added to the tail of the linked list\n";
+    cout << "  Choice:  ";
+
+    int choice;
+    cin >> choice;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    char again = 'y';
+    while (again == 'y' || again =='Y'){
+        double rating;
+        string comment;
+
+        // user info
+        cout << "Enter review rating 0-5: ";
+        cin >> rating;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        cout << "Enter review comments: ";
+        getline(cin, comment);
+
+        if (choice ==1)
+            head = addtoHead(head, rating, comment);
+        else
+            head = addtoTail(head, rating, comment);
+
+        cout << "Enter another review? Y/N: ";
+        cin >> again;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    delete head; head = nullptr;
+    outputAllAndAverage(head);
+    deleteList(head);
     return 0;
 
 }
