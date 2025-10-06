@@ -106,5 +106,4 @@ int main (){
     outputAllAndAverage(head);
     deleteList(head);
     return 0;
-
 }
